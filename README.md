@@ -1,6 +1,6 @@
 # AuthKit
 
-![AuthKit](docs/authkit-banner.png)
+![AuthKit](authkit-banner.png)
 
 **A production-grade authentication system built with Node.js, Passport.js, PostgreSQL, and Redis. Covers every auth pattern a senior engineer would expect to see in a real product.**
 
