@@ -1,0 +1,114 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  GITHUB
+}
+
+enum AuditAction {
+  REGISTER
+  LOGIN
+  LOGIN_FAILED
+  LOGOUT
+  TOKEN_REFRESH
+  PASSWORD_CHANGE
+  PASSWORD_RESET_REQUEST
+  PASSWORD_RESET
+  EMAIL_VERIFY
+  TWO_FA_ENABLE
+  TWO_FA_DISABLE
+  TWO_FA_VERIFY
+  SESSION_REVOKE
+  ACCOUNT_LOCKED
+  ACCOUNT_UNLOCKED
+  OAUTH_LOGIN
+  PROFILE_UPDATE
+  ROLE_CHANGE
+}
+
+model User {
+  id                String       @id @default(uuid())
+  email             String       @unique
+  password          String?
+  displayName       String?
+  avatar            String?
+  role              Role         @default(USER)
+  provider          AuthProvider @default(LOCAL)
+  providerId        String?
+
+  // Email verification
+  isEmailVerified   Boolean      @default(false)
+  emailVerifyToken  String?
+  emailVerifyExpiry DateTime?
+
+  // Password reset
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+
+  // 2FA
+  twoFactorEnabled  Boolean      @default(false)
+  twoFactorSecret   String?
+
+  // Account lockout
+  loginAttempts     Int          @default(0)
+  lockedUntil       DateTime?
+  isActive          Boolean      @default(true)
+
+  // Relations
+  sessions          Session[]
+  auditLogs         AuditLog[]
+
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([email])
+  @@index([provider, providerId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshToken String   @unique
+  deviceInfo   String?
+  ipAddress    String?
+  userAgent    String?
+  isRevoked    Boolean  @default(false)
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  lastUsedAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([refreshToken])
+}
+
+model AuditLog {
+  id         String      @id @default(uuid())
+  userId     String?
+  user       User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     AuditAction
+  ipAddress  String?
+  userAgent  String?
+  metadata   Json?
+  success    Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
