@@ -1,0 +1,131 @@
+:root {
+  /* Crimson Smoke Palette */
+  --color-deep:       #3b0a0a;
+  --color-mid:        #8a2b2b;
+  --color-blush:      #f2c9c9;
+  --color-ember:      #c0392b;
+  --color-smoke:      #1a0505;
+
+  /* Backgrounds */
+  --color-bg:         #0d0303;
+  --color-bg-card:    #1a0808;
+  --color-bg-raised:  #220b0b;
+  --color-bg-overlay: #2d0e0e;
+  --color-bg-hover:   #330f0f;
+
+  /* Text */
+  --color-text:       #f2c9c9;
+  --color-text-sec:   #c9908f;
+  --color-text-muted: #7a4f4e;
+  --color-text-inv:   #0d0303;
+
+  /* Borders */
+  --color-border:     rgba(242, 201, 201, 0.08);
+  --color-border-mid: rgba(242, 201, 201, 0.16);
+  --color-border-act: rgba(138, 43, 43, 0.6);
+
+  /* Semantic */
+  --color-success:    #2ecc71;
+  --color-warning:    #f39c12;
+  --color-error:      #e74c3c;
+  --color-info:       #3498db;
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #3b0a0a 0%, #8a2b2b 100%);
+  --grad-card:    linear-gradient(145deg, #1a0808 0%, #220b0b 100%);
+  --grad-glow:    radial-gradient(ellipse at center, rgba(138,43,43,0.3) 0%, transparent 70%);
+  --grad-smoke:   linear-gradient(180deg, #0d0303 0%, #1a0808 50%, #0d0303 100%);
+
+  /* Shadows */
+  --shadow-sm:  0 2px 8px rgba(59, 10, 10, 0.4);
+  --shadow-md:  0 4px 20px rgba(59, 10, 10, 0.6);
+  --shadow-lg:  0 8px 40px rgba(59, 10, 10, 0.8);
+  --shadow-xl:  0 20px 60px rgba(138, 43, 43, 0.4);
+  --shadow-glow: 0 0 30px rgba(138, 43, 43, 0.5);
+
+  /* Typography */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  /* Spacing & shape */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   22px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --t-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --t-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --t-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-mid);
+  border-radius: var(--radius-full);
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: var(--color-mid);
+  color: var(--color-blush);
+}
+
+/* ---- Focus ---- */
+:focus-visible {
+  outline: 2px solid var(--color-mid);
+  outline-offset: 3px;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
+input, textarea, select { font-family: var(--font-body); }
+img, video { max-width: 100%; display: block; }
+
+/* ---- Utility ---- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
+}
+
+/* ---- Smoke background texture ---- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(138,43,43,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(59,10,10,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(138,43,43,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root { position: relative; z-index: 1; }
