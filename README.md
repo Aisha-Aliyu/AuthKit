@@ -24,15 +24,9 @@ Frontend: [humsy-authkit.vercel.app](https://humsy-authkit.vercel.app)
 
 API: [https://authkit-apii.onrender.com/health](https://authkit-apii.onrender.com/health)
 
-Create an account on the demo, or sign in with GitHub.
+Create an account on the demo, or sign in with Google or GitHub.
 
------
-
-**Demo credentials:**
-
-```
-Admin:  admin@authkit.dev  /  Admin@AuthKit1!
-```
+[Privacy Policy](https://humsy-authkit.vercel.app/privacy) · [Terms of Service](https://humsy-authkit.vercel.app/terms)
 
 -----
 
@@ -55,7 +49,7 @@ Admin:  admin@authkit.dev  /  Admin@AuthKit1!
 - Refresh tokens are UUIDs stored in PostgreSQL, not in the JWT itself
 - Refresh token rotation, every refresh issues a new token and invalidates the old one
 - Logout blacklists the access token in Redis so it cannot be reused before expiry
-- All sessions are stored in the database — every active device is visible and revocable
+- All sessions are stored in the database, so every active device is visible and revocable
 
 **Security layer**
 
@@ -88,8 +82,8 @@ Admin:  admin@authkit.dev  /  Admin@AuthKit1!
 - Every login creates a session record in PostgreSQL
 - Sessions store device info (parsed from User-Agent), IP address, creation time, last used time
 - Users see all active sessions from the dashboard
-- Any individual session can be revoked — kicks that device out immediately
-- “Revoke all” option logs out every other device at once
+- Any individual session can be revoked, which signs that device out immediately
+- "Revoke all" option logs out every other device at once
 - Expired and revoked sessions are cleaned up automatically
 
 **Audit log**
@@ -227,7 +221,7 @@ cp .env.example .env
 # Fill in DATABASE_URL, REDIS_URL, JWT secrets, OAuth keys
 npx prisma generate
 npx prisma db push
-npm run db:seed        # Creates admin@authkit.dev
+ADMIN_SEED_PASSWORD="choose-a-strong-password" npm run db:seed   # Creates admin@authkit.dev
 npm run dev
 ```
 
@@ -307,9 +301,9 @@ Without rotation, a stolen refresh token gives an attacker permanent access unti
 
 ## What I learned building this
 
-The hardest part was getting the 2FA login flow right. The problem is that Passport’s `done(null, user)` callback immediately creates a session, but with 2FA you need to verify a TOTP code first. The solution was intercepting after Passport validates credentials, issuing a temporary short-lived token stored in Redis, and only issuing the real JWT pair after the TOTP code is verified against that temp token. The temp token acts as a pending session that only gets promoted on successful 2FA.
+The hardest part was getting the 2FA login flow right. The problem is that Passport's `done(null, user)` callback immediately creates a session, but with 2FA you need to verify a TOTP code first. The solution was intercepting after Passport validates credentials, issuing a temporary short-lived token stored in Redis, and only issuing the real JWT pair after the TOTP code is verified against that temp token. The temp token acts as a pending session that only gets promoted on successful 2FA.
 
-Refresh token rotation introduced a race condition I didn’t anticipate. If two requests hit the refresh endpoint simultaneously with the same token, both would succeed and issue different new tokens, leaving one request with a now-invalid token. The fix is handling this at the database level with Prisma’s unique constraint on `refreshToken`. The second concurrent write fails with a unique violation, which the client handles by retrying with the new token from the first response.
+Refresh token rotation introduced a race condition I didn't anticipate. If two requests hit the refresh endpoint simultaneously with the same token, both would succeed and issue different new tokens, leaving one request with a now-invalid token. The fix is handling this at the database level with Prisma's unique constraint on `refreshToken`. The second concurrent write fails with a unique violation, which the client handles by retrying with the new token from the first response.
 
 Building the audit log to never crash the application required wrapping every `auditService.log()` call in its own try-catch that swallows errors silently. An audit log failure is never worth taking down the feature that triggered it.
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Mail, Lock, User } from "lucide-react";
 import AuthLayout from "../../layouts/AuthLayout";
@@ -55,7 +55,7 @@ const Register = () => {
       navigate("/dashboard");
     } else {
       toast.error(result.message);
-      if (result.feedback) toast(result.feedback, { icon: "💡" });
+      if (result.feedback) toast(result.feedback);
     }
   };
 
@@ -67,7 +67,7 @@ const Register = () => {
   return (
     <AuthLayout
       title="Create account."
-      subtitle="Join AuthKit — enterprise-grade security"
+      subtitle="Join AuthKit: enterprise-grade security"
       altText="Already have an account?"
       altLink="/login"
       altLinkText="Sign in"
@@ -106,8 +106,8 @@ const Register = () => {
 
         <p style={{ fontSize: "11px", color: "var(--color-text-muted)", lineHeight: 1.6 }}>
           By creating an account you agree to our{" "}
-          <span style={{ color: "var(--color-mid)" }}>Terms of Service</span> and{" "}
-          <span style={{ color: "var(--color-mid)" }}>Privacy Policy</span>.
+          <Link to="/terms" style={{ color: "var(--color-blush)", textDecoration: "underline" }}>Terms of Service</Link> and{" "}
+          <Link to="/privacy" style={{ color: "var(--color-blush)", textDecoration: "underline" }}>Privacy Policy</Link>.
         </p>
 
         <button type="submit" disabled={loading}

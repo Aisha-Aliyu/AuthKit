@@ -16,6 +16,8 @@ const AuditLog      = lazy(() => import("./pages/dashboard/AuditLog"));
 const DashSettings  = lazy(() => import("./pages/dashboard/DashSettings"));
 const AdminStats    = lazy(() => import("./pages/admin/AdminStats"));
 const AdminUsers    = lazy(() => import("./pages/admin/AdminUsers"));
+const Privacy       = lazy(() => import("./pages/legal/Privacy"));
+const Terms         = lazy(() => import("./pages/legal/Terms"));
 
 const Loader = () => (
   <div style={{
@@ -51,6 +53,8 @@ export default function App() {
         <Route path="/reset-password"  element={<ResetPw />} />
         <Route path="/oauth/callback"  element={<OAuthCallback />} />
         <Route path="/verify-email"    element={<Navigate to="/dashboard" replace />} />
+        <Route path="/privacy"         element={<Privacy />} />
+        <Route path="/terms"           element={<Terms />} />
 
         {/* Dashboard */}
         <Route path="/dashboard" element={

@@ -588,9 +588,10 @@ const oauthCallback = async (req, res, next) => {
       metadata: { provider: req.user.provider },
     });
 
-    // Redirect to frontend with tokens in query 
+    // Redirect to frontend with tokens in the URL fragment, which browsers never send to servers,
+    // so the tokens stay out of request logs
     res.redirect(
-      `${process.env.CLIENT_URL}/oauth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`
+      `${process.env.CLIENT_URL}/oauth/callback#accessToken=${encodeURIComponent(accessToken)}&refreshToken=${encodeURIComponent(refreshToken)}`
     );
   } catch (error) {
     next(error);
