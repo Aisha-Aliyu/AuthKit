@@ -14,7 +14,7 @@ const Terms = () => (
       <List items={[
         "Use it to try the features. Don't store anything important or private in it.",
         "Don't attack or overload the demo, don't try to get into other people's accounts, and don't create accounts in bulk.",
-        "If you find a security problem, please report it through GitHub instead of exploiting it.",
+        "If you find a security problem, please email Aisha privately at the address on her GitHub profile instead of exploiting it or posting it publicly.",
       ]} />
     </Section>
 
@@ -35,7 +35,7 @@ const Terms = () => (
 
     <Section title="Contact">
       <p>
-        Questions? Reach Aisha through <GitHubLink />.
+        Questions? Email Aisha at the address on her GitHub profile: <GitHubLink />.
       </p>
     </Section>
   </LegalPage>

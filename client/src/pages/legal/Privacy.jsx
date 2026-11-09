@@ -12,12 +12,12 @@ const Privacy = () => (
 
     <Section title="What AuthKit stores">
       <List items={[
-        "Your email address, plus your name and profile picture if you sign in with Google or GitHub.",
+        "Your email address and display name, an optional profile picture link, and your Google or GitHub account ID if you sign in with one of them.",
         "Your password, kept only as a bcrypt hash. AuthKit never stores it as plain text.",
         "Your role, and whether your account is active or locked.",
-        "If you turn on two-factor authentication, the secret your authenticator app uses.",
+        "If you start setting up two-factor authentication, the secret your authenticator app uses.",
         "For each session: your IP address, browser and device, and when the session started and was last used.",
-        "A security log of account events, such as sign-ins, failed sign-ins and password changes, with the IP address and browser used.",
+        "A security log of account events, such as sign-ins, failed sign-ins and password changes, with the IP address and browser used. Failed sign-in attempts are logged with the email that was typed, even when no account exists for it.",
       ]} />
     </Section>
 
@@ -31,31 +31,34 @@ const Privacy = () => (
 
     <Section title="Where it's kept">
       <List items={[
-        "The database runs on Neon. Short-lived security data, such as failed sign-in counts and signed-out tokens, sits on Upstash.",
+        "The database runs on Neon. Short-lived security data, such as signed-out tokens and pending two-factor sign-ins, sits on Upstash.",
         "The server runs on Render and the website on Vercel.",
-        "If you sign in with Google or GitHub, they send AuthKit your email, name and profile picture. Their own privacy policies cover what they do with your data.",
+        "If you sign in with Google or GitHub, they send AuthKit your email, name, profile picture and account ID. Their own privacy policies cover what they do with your data.",
+        "The site loads its fonts from Google Fonts, so Google sees your IP address when a page loads.",
+        "When email is switched on, your email address goes through the email service that sends AuthKit's messages.",
         "Your browser keeps your login session in local storage until you sign out.",
       ]} />
     </Section>
 
     <Section title="Who can see it">
       <p>
-        Aisha, as the developer, can see account details in the database. Admin accounts, which only
-        the developer gives out, can see the list of users and their email addresses.
+        Aisha, as the developer, can see account details in the database. Admin and moderator
+        accounts, which only Aisha gives out, can see every user's email, name, role and account
+        status, the IP address and device of active sessions, and every user's security log.
       </p>
     </Section>
 
     <Section title="How long it's kept">
       <p>
-        Your account stays until you ask for it to be deleted or the demo is reset. Because this is a
-        demo, the database may be cleared at any time.
+        Your account and its security log stay until you ask for them to be deleted or the demo is
+        reset. Because this is a demo, the database may be cleared at any time.
       </p>
     </Section>
 
     <Section title="Your choices">
       <List items={[
         "You can sign out of any of your sessions from the Sessions page.",
-        "To delete your account and its data, or to ask what's stored about you, contact Aisha through her GitHub profile.",
+        "To delete your account and its security log, or to ask what's stored about you, email Aisha at the address on her GitHub profile.",
       ]} />
       <p style={{ marginTop: "10px" }}>
         <GitHubLink />

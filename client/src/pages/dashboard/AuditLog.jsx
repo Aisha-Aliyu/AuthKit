@@ -29,7 +29,7 @@ const AuditLog = () => {
     queryFn: async () => {
       const url = isAdmin
         ? `/admin/audit-logs?page=${page}&limit=20`
-        : `/admin/audit-logs?page=${page}&limit=20&userId=${user?.id}`;
+        : `/sessions/logs?page=${page}`;
       const { data } = await api.get(url);
       return data;
     },

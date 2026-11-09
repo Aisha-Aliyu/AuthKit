@@ -51,6 +51,8 @@ api.interceptors.response.use(
         );
 
         useAuthStore.getState().setAccessToken(data.accessToken);
+        // The server rotates refresh tokens, so keep the new one or the next refresh fails
+        if (data.refreshToken) useAuthStore.setState({ refreshToken: data.refreshToken });
         processQueue(null, data.accessToken);
         original.headers.Authorization = `Bearer ${data.accessToken}`;
         return api(original);
