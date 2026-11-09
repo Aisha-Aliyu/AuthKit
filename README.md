@@ -20,8 +20,13 @@ The frontend is a clean React dashboard where users manage their own security se
 
 ## Live Demo
 
-**Frontend:** [humsy-authkit.vercel.app](https://humsy-authkit.vercel.app)  
-**API:** [authentication-system-production-6764.up.railway.app/health](https://authentication-system-production-6764.up.railway.app/health)
+Frontend: [humsy-authkit.vercel.app](https://humsy-authkit.vercel.app)
+
+API: [https://authkit-apii.onrender.com/health](https://authkit-apii.onrender.com/health)
+
+Create an account on the demo, or sign in with GitHub.
+
+-----
 
 **Demo credentials:**
 
