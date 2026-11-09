@@ -91,6 +91,15 @@ const AuthLayout = ({ children, title, subtitle, altText, altLink, altLinkText }
             </Link>
           </p>
         )}
+
+        <p style={{
+          marginTop: "16px", textAlign: "center",
+          fontSize: "12px", color: "var(--color-text-muted)",
+        }}>
+          <Link to="/privacy" style={{ color: "var(--color-text-muted)" }}>Privacy Policy</Link>
+          {" · "}
+          <Link to="/terms" style={{ color: "var(--color-text-muted)" }}>Terms of Service</Link>
+        </p>
       </div>
     </div>
   </div>

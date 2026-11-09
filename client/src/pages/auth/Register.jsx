@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Mail, Lock, User } from "lucide-react";
 import AuthLayout from "../../layouts/AuthLayout";
@@ -106,8 +106,8 @@ const Register = () => {
 
         <p style={{ fontSize: "11px", color: "var(--color-text-muted)", lineHeight: 1.6 }}>
           By creating an account you agree to our{" "}
-          <span style={{ color: "var(--color-mid)" }}>Terms of Service</span> and{" "}
-          <span style={{ color: "var(--color-mid)" }}>Privacy Policy</span>.
+          <Link to="/terms" style={{ color: "var(--color-mid)" }}>Terms of Service</Link> and{" "}
+          <Link to="/privacy" style={{ color: "var(--color-mid)" }}>Privacy Policy</Link>.
         </p>
 
         <button type="submit" disabled={loading}

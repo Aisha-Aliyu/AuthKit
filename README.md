@@ -24,15 +24,9 @@ Frontend: [humsy-authkit.vercel.app](https://humsy-authkit.vercel.app)
 
 API: [https://authkit-apii.onrender.com/health](https://authkit-apii.onrender.com/health)
 
-Create an account on the demo, or sign in with GitHub.
+Create an account on the demo, or sign in with Google or GitHub.
 
------
-
-**Demo credentials:**
-
-```
-Admin:  admin@authkit.dev  /  Admin@AuthKit1!
-```
+[Privacy Policy](https://humsy-authkit.vercel.app/privacy) · [Terms of Service](https://humsy-authkit.vercel.app/terms)
 
 -----
 
