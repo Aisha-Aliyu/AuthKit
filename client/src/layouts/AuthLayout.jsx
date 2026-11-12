@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ServerStatus from "../components/ui/ServerStatus";
 
 const AuthLayout = ({ children, title, subtitle, altText, altLink, altLinkText }) => (
   <div style={{
@@ -70,6 +71,8 @@ const AuthLayout = ({ children, title, subtitle, altText, altLink, altLinkText }
           }}>{title}</h1>
           <p style={{ fontSize: "14px", color: "var(--color-text-muted)" }}>{subtitle}</p>
         </div>
+
+        <ServerStatus />
 
         {children}
 

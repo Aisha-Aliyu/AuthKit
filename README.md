@@ -26,6 +26,8 @@ API: [https://authkit-apii.onrender.com/health](https://authkit-apii.onrender.co
 
 Create an account on the demo, or sign in with Google or GitHub.
 
+The API runs on Render's free plan, which sleeps after 15 minutes without visitors. The sign-in pages start waking it as soon as they open and show when it's online. The first request after a quiet spell can take about a minute.
+
 [Privacy Policy](https://humsy-authkit.vercel.app/privacy) · [Terms of Service](https://humsy-authkit.vercel.app/terms)
 
 -----

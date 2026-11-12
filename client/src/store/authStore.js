@@ -2,6 +2,14 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import api from "../api/axios";
 
+// No answer, or the host's own error while the free server wakes up
+const serverMessage = (error, fallback) => {
+  if (!error.response || [502, 503, 504].includes(error.response.status)) {
+    return "Can't reach the server yet. It may be waking up, so try again in a minute.";
+  }
+  return error.response.data?.message || fallback;
+};
+
 const useAuthStore = create(
   persist(
     (set, get) => ({
@@ -31,7 +39,7 @@ const useAuthStore = create(
         } catch (error) {
           return {
             success: false,
-            message: error.response?.data?.message || "Login failed",
+            message: serverMessage(error, "Login failed"),
             locked: error.response?.data?.locked || false,
           };
         }
@@ -50,7 +58,7 @@ const useAuthStore = create(
         } catch (error) {
           return {
             success: false,
-            message: error.response?.data?.message || "Invalid code",
+            message: serverMessage(error, "Invalid code"),
           };
         }
       },
@@ -68,7 +76,7 @@ const useAuthStore = create(
         } catch (error) {
           return {
             success: false,
-            message: error.response?.data?.message || "Registration failed",
+            message: serverMessage(error, "Registration failed"),
             feedback: error.response?.data?.feedback,
           };
         }
